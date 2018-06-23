@@ -1,0 +1,15 @@
+.DS_Store
+megaphone
+a.out
+phbook
+test.cpp
+Account.class.hpp
+tests.cpp
+tst.txt
+
+*.o
+*.log
+*.gch
+*.dSYM
+*.replace
+*.log

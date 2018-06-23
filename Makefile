@@ -1,18 +1,20 @@
-
 NAME	=	ft_retro
 
-CLANG	=	clang++ -Wall -Wextra -Werror
+CLANG	=	clang++ -g -Wall -Wextra -Werror
 
 NCURSES	=	-lncurses
 
-SRC		=	GameEntity.cpp
+SRC		=	main.cpp \
+			Enemy.cpp \
+			Star.cpp \
+			Player.cpp \
 
 OBJ		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CLANG) -o $(NAME) $(OBJ)
+	$(CLANG) $(NCURSES) -o $(NAME) $(OBJ)
 
 %.o: %.cpp
 	$(CLANG) -o $@ -c $<
@@ -20,7 +22,7 @@ $(NAME): $(OBJ)
 clean:
 	rm -rf $(OBJ)
 
-fclean: 
+fclean:
 	rm -f $(OBJ)
 	rm -f $(NAME)
 
