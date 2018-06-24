@@ -1,6 +1,6 @@
 NAME	=	ft_retro
 
-CLANG	=	clang++ -g -Wall -Wextra -Werror
+CLANG	=	clang++ -Wall -Wextra -Werror
 
 NCURSES	=	-lncurses
 
