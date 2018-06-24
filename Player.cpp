@@ -80,6 +80,50 @@ void Player::shoot(void) {
 	}
 }
 
+void Player::hitEnemy(Enemy& enemy) {
+	for ( int k = 0; k < PLAYER_MISSILES; k++) {
+		if (enemy.getXPos() == this->getMissiles()[k].getXPos() &&
+				enemy.getYPos() == this->getMissiles()[k].getYPos())
+		{
+			this->setScore(this->getScore() + 1);
+			enemy.setYXPosSmart(WINDOW_HEIGHT + 42);
+		}
+	}
+}
+
+int Player::enemyCollision(Enemy& enemy) {
+	if (this->getXPos() == enemy.getXPos() &&
+			this->getYPos() == enemy.getYPos()) {
+		return 1;
+	}
+	return 0;
+}
+
+void Player::hitByEnemy(Missile& enemyMissile) {
+	if (this->getXPos() == enemyMissile.getXPos() &&
+			this->getYPos() == enemyMissile.getYPos()) {
+		this->setHealth(this->getHealth() - 1);
+	}
+}
+
+void Player::spawnHealthKit(HealthKit& healthKit) {
+	static int spawned = 4;
+	if ((int)this->getScore() != 0 && (int)this->getScore() % spawned == 0) {
+		healthKit.setYPos(1);
+		healthKit.setXPos(rand() % (WINDOW_WIDTH - 2) + 1);
+		spawned += 4;
+	}
+}
+
+void Player::consumeHealthKit(HealthKit& healthKit) {
+	if (this->getXPos() == healthKit.getXPos() &&
+			this->getYPos() == healthKit.getYPos()) {
+		this->setHealth(this->getHealth() + 25);
+		healthKit.setYPos(-1);
+		healthKit.setXPos(-1);
+	}
+}
+
 /* Private */
 
 void Player::_moveUp(void) {
@@ -111,32 +155,6 @@ void Player::_moveRight(void) {
 	this->setXPos(this->getXPos() + 1);
 	if (this->getXPos() > this->getXMaxPos() - 2) {
 		this->setXPos(this->getXMaxPos() - 2);
-	}
-}
-
-void Player::hitEnemy(Enemy& enemy) {
-	for ( int k = 0; k < PLAYER_MISSILES; k++) {
-		if (enemy.getXPos() == this->getMissiles()[k].getXPos() &&
-				enemy.getYPos() == this->getMissiles()[k].getYPos())
-		{
-			this->setScore(this->getScore() + 1);
-			enemy.setYXPosSmart(WINDOW_HEIGHT + 42);
-		}
-	}
-}
-
-int Player::enemyCollision(Enemy& enemy) {
-	if (this->getXPos() == enemy.getXPos() &&
-			this->getYPos() == enemy.getYPos()) {
-		return 1;
-	}
-	return 0;
-}
-
-void Player::hitByEnemy(Missile& enemyMissile) {
-	if (this->getXPos() == enemyMissile.getXPos() &&
-			this->getYPos() == enemyMissile.getYPos()) {
-		this->setHealth(this->getHealth() - 1);
 	}
 }
 

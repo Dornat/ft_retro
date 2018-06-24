@@ -4,6 +4,7 @@
 #include "GameEntity.hpp"
 #include "Missile.hpp"
 #include "Enemy.hpp"
+#include "HealthKit.hpp"
 
 class Player: public GameEntity {
 	public:
@@ -24,6 +25,8 @@ class Player: public GameEntity {
 		void hitEnemy(Enemy& enemy);
 		int enemyCollision(Enemy& enemy);
 		void hitByEnemy(Missile& enemyMissile);
+		void spawnHealthKit(HealthKit& healthKit);
+		void consumeHealthKit(HealthKit& healthKit);
 
 		WINDOW* getWin(void) const;
 		Missile* getMissiles(void) const;
