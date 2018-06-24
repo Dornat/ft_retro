@@ -32,13 +32,38 @@ int		main(void) {
 	WINDOW* mainWin = newwin(WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT / 3, WINDOW_WIDTH / 3);
 	WINDOW * score = newwin (WINDOW_HEIGHT / 4, WINDOW_WIDTH, WINDOW_HEIGHT / 16, WINDOW_WIDTH / 3);
 	box(mainWin, 0, 0);
-	box(score, 1, 0);
+	
 	refresh();
 	wrefresh(mainWin);
 	wrefresh(score);
 
+
 	nodelay(mainWin, true);
 
+	while ((c = wgetch(mainWin)) != 32) {
+		wattron(mainWin, COLOR_PAIR(3));
+		mvwprintw(mainWin, WINDOW_HEIGHT / 5, WINDOW_WIDTH / 4 + 6, "__        __   _");
+		mvwprintw(mainWin, WINDOW_HEIGHT / 5  + 1, WINDOW_WIDTH / 4 + 6, "\\ \\      / /__| | ___ ___  _ __ ___   ___");
+		mvwprintw(mainWin, WINDOW_HEIGHT / 5  + 2, WINDOW_WIDTH / 4 + 6, " \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\");
+		mvwprintw(mainWin, WINDOW_HEIGHT / 5  + 3, WINDOW_WIDTH / 4 + 6, "  \\ V  V /  __/ | (_| (_) | | | | | |  __/");
+		mvwprintw(mainWin, WINDOW_HEIGHT / 5  + 4, WINDOW_WIDTH / 4 + 6, "   \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|");
+		wattroff(mainWin, COLOR_PAIR(3));
+		mvwprintw(mainWin, WINDOW_HEIGHT / 5 + 6, WINDOW_WIDTH / 2 - 2, "to ft_retro");
+		mvwprintw(mainWin, WINDOW_HEIGHT / 5 + 7, WINDOW_WIDTH / 3 + 6, "made by dpolosuk and sbratche");
+		mvwprintw(mainWin, WINDOW_HEIGHT - 10, WINDOW_WIDTH / 2 - 10, "Controls:");
+		mvwprintw(mainWin, WINDOW_HEIGHT - 9, WINDOW_WIDTH / 2 - 10, "Up - key up");
+		mvwprintw(mainWin, WINDOW_HEIGHT - 8, WINDOW_WIDTH / 2 - 10, "Down - key down");
+		mvwprintw(mainWin, WINDOW_HEIGHT - 7, WINDOW_WIDTH / 2 - 10, "Left - key left");
+		mvwprintw(mainWin, WINDOW_HEIGHT - 6, WINDOW_WIDTH / 2 - 10, "Right - key right");
+		mvwprintw(mainWin, WINDOW_HEIGHT - 5, WINDOW_WIDTH / 2 - 10, "Shoot - 'X'");
+		mvwprintw(mainWin, WINDOW_HEIGHT - 4, WINDOW_WIDTH / 2 - 10, "Escape - 'Q'");
+		wattron(mainWin, A_BOLD);
+		mvwprintw(mainWin, WINDOW_HEIGHT / 5 + 13, WINDOW_WIDTH / 3 + 8, "Press 'Space' to start");
+		wattroff(mainWin, A_BOLD);
+	}
+
+	wclear(mainWin);
+	box(score, 1, 0);
 	Star* spaceOfStars = new Star[NUMBER_OF_STARS];
 	Enemy* someEnemies = new Enemy[NUMBER_OF_ENEMIES];
 	Missile* playerMissiles = new Missile[PLAYER_MISSILES];
