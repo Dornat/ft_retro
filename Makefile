@@ -6,8 +6,9 @@ NCURSES	=	-lncurses
 
 SRC		=	main.cpp \
 			Enemy.cpp \
-			Star.cpp \
+			Missile.cpp \
 			Player.cpp \
+			Star.cpp \
 
 OBJ		=	$(SRC:.cpp=.o)
 

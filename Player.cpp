@@ -27,12 +27,13 @@ Player& Player::operator=(const Player& rhs) {
 	return *this;
 }
 
-Player::Player(WINDOW* win, int y, int x, char name) {
+Player::Player(WINDOW* win, int y, int x, char name, Missile* missiles) {
 	this->setYPos(y);
 	this->setXPos(x);
 	getmaxyx(win, this->_yMaxPos, this->_xMaxPos);
 	this->setName(name);
 	this->setWin(win);
+	this->setMissiles(missiles);
 	keypad(win, TRUE);
 }
 
@@ -46,12 +47,43 @@ void Player::move(int key) {
 	} else if (key == KEY_RIGHT || key == 'l') {
 		this->_moveRight();
 	} else if (key == 'x') {
-		this->_shoot();
+		this->shoot();
 	}
 }
 
 void Player::display(void) {
+	init_pair(1, COLOR_BLUE, COLOR_BLACK);
+	wattron(this->getWin(), COLOR_PAIR(1));
 	mvwaddch(this->getWin(), this->getYPos(), this->getXPos(), this->getName());
+	wattroff(this->getWin(), COLOR_PAIR(1));
+}
+
+void Player::missileLauncher(int random) {
+	for (int i = 0; i < PLAYER_MISSILES; i++) {
+		/* if (this->getMissiles()[i].getXPos() > 0 || */
+		/* 	this->getMissiles()[i].getYPos() > 0) { */
+		/* 	if (random % 15 == 0) { */
+		/* 		this->getMissiles()[i].display(this->getWin()); */
+		/* 	} */
+		/* } */
+		if (this->_missiles[i].getXPos() > 0 ||
+			this->_missiles[i].getYPos() > 0) {
+			if (random % 10 == 0) {
+				this->_missiles[i].displayPlayer(this->_win);
+			}
+		}
+	}
+}
+
+void Player::shoot(void) {
+	for (int i = 0; i < PLAYER_MISSILES; i++) {
+		if (this->getMissiles()[i].getXPos() < 0 ||
+			this->getMissiles()[i].getYPos() < 0) {
+			this->getMissiles()[i].setYPos(this->getYPos() - 1);
+			this->getMissiles()[i].setXPos(this->getXPos());
+			break;
+		}
+	}
 }
 
 /* Private */
@@ -88,18 +120,6 @@ void Player::_moveRight(void) {
 	}
 }
 
-void Player::_shoot(void) {
-	int yPos = this->getYPos();
-	int xPos = this->getXPos();
-	while (yPos-- > 1) {
-		mvwaddch(this->getWin(), yPos, xPos, '|');
-		wrefresh(this->getWin());
-		usleep(5000);
-		mvwaddch(this->getWin(), yPos, xPos, ' ');
-		wrefresh(this->getWin());
-	}
-}
-
 /* Getters */
 
 int Player::getYPos(void) const {
@@ -126,6 +146,10 @@ WINDOW* Player::getWin(void) const {
 	return this->_win;
 }
 
+Missile* Player::getMissiles(void) const {
+	return this->_missiles;
+}
+
 /* Setters */
 
 void Player::setYPos(int yPos) {
@@ -150,4 +174,8 @@ void Player::setName(char name) {
 
 void Player::setWin(WINDOW* win) {
 	this->_win = win;
+}
+
+void Player::setMissiles(Missile* missiles) {
+	this->_missiles = missiles;
 }

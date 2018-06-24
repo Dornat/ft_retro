@@ -24,6 +24,36 @@ Enemy& Enemy::operator=(const Enemy& rhs) {
 	return *this;
 }
 
+void Enemy::display(WINDOW* win) {
+	mvwaddch(win, this->getYPos(), this->getXPos(), ' ');
+	this->setYXPosSmart(this->getYPos() + 1);
+	wattron(win, COLOR_PAIR(2));
+	mvwaddch(win, this->getYPos(), this->getXPos(), this->getName());
+	wattroff(win, COLOR_PAIR(2));
+}
+
+void Enemy::missileLauncher(int random, Missile* missiles, WINDOW* win) {
+	for (int i = 0; i < ENEMY_MISSILES; i++) {
+		if (missiles[i].getXPos() > 0 ||
+			missiles[i].getYPos() > 0) {
+			if (random % 50 == 0) {
+				missiles[i].displayEnemy(win);
+			}
+		}
+	}
+}
+
+void Enemy::shoot(Missile* missiles) {
+	for (int i = 0; i < PLAYER_MISSILES; i++) {
+		if (
+			missiles[i].getYPos() < 0) {
+			missiles[i].setYPos(this->getYPos() + 1);
+			missiles[i].setXPos(this->getXPos());
+			break;
+		}
+	}
+}
+
 /* Getters */
 
 int Enemy::getYPos(void) const {

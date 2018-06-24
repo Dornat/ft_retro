@@ -3,6 +3,7 @@
 #include "StarSpace.hpp"
 #include "Star.hpp"
 #include "Enemy.hpp"
+#include "Missile.hpp"
 
 #define DELAY 10000
 
@@ -67,6 +68,9 @@ int		main(void) {
 	nodelay(stdscr, true);
 	/* raw(); */
 
+	start_color();
+	init_pair(1, COLOR_BLUE, COLOR_BLACK);
+	init_pair(2, COLOR_RED, COLOR_BLACK);
 	srand(time(0));
 	getmaxyx(stdscr, yMax, xMax);
 
@@ -76,52 +80,45 @@ int		main(void) {
 	wrefresh(testWin);
 
 	nodelay(testWin, true);
-	Star* spaceOfStars = new Star[20];
-	Enemy* someEnemies = new Enemy[7];
 
-	Player player(testWin, WINDOW_HEIGHT - 2, WINDOW_WIDTH / 2, '@');
+	Star* spaceOfStars = new Star[NUMBER_OF_STARS];
+	Enemy* someEnemies = new Enemy[NUMBER_OF_ENEMIES];
+	Missile* playerMissiles = new Missile[PLAYER_MISSILES];
+	Missile* enemyMissiles = new Missile[ENEMY_MISSILES];
+
+	Player player(testWin, WINDOW_HEIGHT - 2, WINDOW_WIDTH / 2, '@', playerMissiles);
 
 
 	int j = 0;
 
 	player.display();
 	while ((c = wgetch(testWin)) != 'q') {
-
-		/* wclear(testWin); */
-		/* mvwaddch(testWin, missY, missX, ' '); */
-		/* missY += 1; */
-		/* mvwaddch(testWin, missY, missX, 'M'); */
-		/* mvwaddch(testWin, testStar.getYPos(), testStar.getXPos(), ' '); */
-		/* testStar.setYXPosSmart(testStar.getYPos() + 1); */
-		/* mvwaddch(testWin, testStar.getYPos(), testStar.getXPos(), '.'); */
 		for (int i = 0; i < 20; i++) {
 			if (j % 20 == 0) {
-				mvwaddch(testWin, spaceOfStars[i].getYPos(), spaceOfStars[i].getXPos(), ' ');
-				spaceOfStars[i].setYXPosSmart(spaceOfStars[i].getYPos() + 1);
-				mvwaddch(testWin, spaceOfStars[i].getYPos(), spaceOfStars[i].getXPos(), '.');
+				spaceOfStars[i].display(testWin);
 			}
 		}
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < NUMBER_OF_ENEMIES; i++) {
 			if (j % 30 == 0) {
-				mvwaddch(testWin, someEnemies[i].getYPos(), someEnemies[i].getXPos(), ' ');
-				someEnemies[i].setYXPosSmart(someEnemies[i].getYPos() + 1);
-				mvwaddch(testWin, someEnemies[i].getYPos(), someEnemies[i].getXPos(), someEnemies[i].getName());
+				someEnemies[i].display(testWin);
 			}
+			someEnemies[i].shoot(enemyMissiles);
+			someEnemies[i].missileLauncher(j, enemyMissiles, testWin);
 		}
 
 		player.move(c);
 		player.display();
+		player.missileLauncher(j);
 		wrefresh(testWin);
-		/* if (missY == 18) { */
-		/* 	mvwaddch(testWin, missY, missX, ' '); */
-		/* 	missY = 1; */
-		/* } */
 		usleep(DELAY);
-		/* timeout(0); */
+		box(testWin, 0, 0);
 		j++;
 	}
 
+	delete [] spaceOfStars;
+	delete [] someEnemies;
+	delete [] playerMissiles;
 	endwin();
 	return 0;
 }

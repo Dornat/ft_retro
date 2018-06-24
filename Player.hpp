@@ -2,6 +2,7 @@
 # define PLAYER_H
 
 #include "GameEntity.hpp"
+#include "Missile.hpp"
 
 class Player {
 	public:
@@ -9,10 +10,16 @@ class Player {
 		Player(const Player& copy);
 		~Player(void);
 		Player& operator=(const Player&);
-		Player(WINDOW* win, int y, int x, char name);
+		Player(WINDOW* win,
+				int y,
+				int x,
+				char name,
+				Missile* missiles);
 
 		void move(int key);
 		void display(void);
+		void shoot(void);
+		void missileLauncher(int missileLauncher);
 
 		int getYPos(void) const;
 		int getXPos(void) const;
@@ -20,6 +27,7 @@ class Player {
 		int getXMaxPos(void) const;
 		char getName(void) const;
 		WINDOW* getWin(void) const;
+		Missile* getMissiles(void) const;
 
 		void setYPos(int yPos);
 		void setXPos(int xPos);
@@ -27,6 +35,7 @@ class Player {
 		void setXMaxPos(int xMaxPos);
 		void setName(char name);
 		void setWin(WINDOW* win);
+		void setMissiles(Missile* missiles);
 
 
 	private:
@@ -36,12 +45,12 @@ class Player {
 		int _xMaxPos;
 		char _name;
 		WINDOW* _win;
+		Missile* _missiles;
 
 		void _moveUp(void);
 		void _moveDown(void);
 		void _moveLeft(void);
 		void _moveRight(void);
-		void _shoot(void);
 };
 
 #endif

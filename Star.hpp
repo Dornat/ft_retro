@@ -10,6 +10,8 @@ class Star {
 		~Star(void);
 		Star& operator=(const Star&);
 
+		void display(WINDOW* win);
+
 		void setYPos(int yPos);
 		void setXPos(int xPos);
 		void setYXPosSmart(int yPos);

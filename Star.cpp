@@ -19,6 +19,12 @@ Star& Star::operator=(const Star& rhs) {
 	return *this;
 }
 
+void Star::display(WINDOW* win) {
+	mvwaddch(win, this->getYPos(), this->getXPos(), ' ');
+	this->setYXPosSmart(this->getYPos() + 1);
+	mvwaddch(win, this->getYPos(), this->getXPos(), '.');
+}
+
 /* Getters */
 
 int Star::getYPos(void) const {
