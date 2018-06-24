@@ -34,6 +34,7 @@ Player::Player(WINDOW* win, int y, int x, char name, Missile* missiles) {
 	this->setName(name);
 	this->setWin(win);
 	this->setMissiles(missiles);
+	this->setHealth(100);
 	keypad(win, TRUE);
 }
 
@@ -120,6 +121,19 @@ void Player::_moveRight(void) {
 	}
 }
 
+void Player::hitEnemy( Enemy &enemy)
+{
+	for ( int k = 0; k < PLAYER_MISSILES; k++) 
+	{
+		if (enemy.getXPos() == this->getMissiles()[k].getXPos() &&
+			enemy.getYPos() == this->getMissiles()[k].getYPos())
+			{
+				this->setScore(this->getScore() + 1);
+				enemy.setYXPosSmart(WINDOW_HEIGHT + 42);
+			}
+	}
+}
+
 /* Getters */
 
 int Player::getYPos(void) const {
@@ -150,6 +164,14 @@ Missile* Player::getMissiles(void) const {
 	return this->_missiles;
 }
 
+float Player::getHealth(void) const {
+	return this->_health;
+}
+
+float Player::getScore(void) const {
+	return this->_score;
+}
+
 /* Setters */
 
 void Player::setYPos(int yPos) {
@@ -178,4 +200,12 @@ void Player::setWin(WINDOW* win) {
 
 void Player::setMissiles(Missile* missiles) {
 	this->_missiles = missiles;
+}
+
+void Player::setHealth( float health) {
+	this->_health = health;
+}
+
+void Player::setScore( float score) {
+	this->_score = score;
 }

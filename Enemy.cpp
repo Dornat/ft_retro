@@ -36,7 +36,7 @@ void Enemy::missileLauncher(int random, Missile* missiles, WINDOW* win) {
 	for (int i = 0; i < ENEMY_MISSILES; i++) {
 		if (missiles[i].getXPos() > 0 ||
 			missiles[i].getYPos() > 0) {
-			if (random % 50 == 0) {
+			if (random % 10 == 0) {
 				missiles[i].displayEnemy(win);
 			}
 		}

@@ -3,6 +3,7 @@
 
 #include "GameEntity.hpp"
 #include "Missile.hpp"
+#include "Enemy.hpp"
 
 class Player {
 	public:
@@ -20,6 +21,7 @@ class Player {
 		void display(void);
 		void shoot(void);
 		void missileLauncher(int missileLauncher);
+		void hitEnemy(Enemy &enemy);
 
 		int getYPos(void) const;
 		int getXPos(void) const;
@@ -28,6 +30,8 @@ class Player {
 		char getName(void) const;
 		WINDOW* getWin(void) const;
 		Missile* getMissiles(void) const;
+		float getHealth(void) const;
+		float getScore(void) const;
 
 		void setYPos(int yPos);
 		void setXPos(int xPos);
@@ -36,6 +40,8 @@ class Player {
 		void setName(char name);
 		void setWin(WINDOW* win);
 		void setMissiles(Missile* missiles);
+		void setHealth(float health);
+		void setScore(float score);
 
 
 	private:
@@ -46,6 +52,8 @@ class Player {
 		char _name;
 		WINDOW* _win;
 		Missile* _missiles;
+		float _health;
+		float _score;
 
 		void _moveUp(void);
 		void _moveDown(void);
