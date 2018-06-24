@@ -22,14 +22,20 @@ Missile& Missile::operator=(const Missile& rhs) {
 void Missile::displayPlayer(WINDOW* win) {
 	mvwaddch(win, this->getYPos(), this->getXPos(), ' ');
 	this->_setYXPosSmartPlayer(this->getYPos() - 1);
+	wattron(win, COLOR_PAIR(3));
 	mvwaddch(win, this->getYPos(), this->getXPos(), '|');
+	wattroff(win, COLOR_PAIR(3));
 }
 
 void Missile::displayEnemy(WINDOW* win) {
 	mvwaddch(win, this->getYPos(), this->getXPos(), ' ');
 	this->_setYXPosSmartEnemy(this->getYPos() + 1);
+	wattron(win, COLOR_PAIR(4));
 	mvwaddch(win, this->getYPos(), this->getXPos(), '|');
+	wattroff(win, COLOR_PAIR(4));
 }
+
+/* Private */
 
 void Missile::_setYXPosSmartPlayer(int yPos) {
 	if (yPos < 1) {
@@ -49,24 +55,4 @@ void Missile::_setYXPosSmartEnemy(int yPos) {
 	} else {
 		this->setYPos(yPos);
 	}
-}
-
-/* Getters */
-
-int Missile::getYPos(void) const {
-	return this->_yPos;
-}
-
-int Missile::getXPos(void) const {
-	return this->_xPos;
-}
-
-/* Setters */
-
-void Missile::setYPos(int yPos) {
-	this->_yPos = yPos;
-}
-
-void Missile::setXPos(int xPos) {
-	this->_xPos = xPos;
 }

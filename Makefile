@@ -6,6 +6,7 @@ NCURSES	=	-lncurses
 
 SRC		=	main.cpp \
 			Enemy.cpp \
+			GameEntity.cpp \
 			Missile.cpp \
 			Player.cpp \
 			Star.cpp \

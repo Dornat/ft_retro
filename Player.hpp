@@ -5,7 +5,7 @@
 #include "Missile.hpp"
 #include "Enemy.hpp"
 
-class Player {
+class Player: public GameEntity {
 	public:
 		Player(void);
 		Player(const Player& copy);
@@ -21,23 +21,15 @@ class Player {
 		void display(void);
 		void shoot(void);
 		void missileLauncher(int missileLauncher);
-		void hitEnemy(Enemy &enemy);
+		void hitEnemy(Enemy& enemy);
+		int enemyCollision(Enemy& enemy);
+		void hitByEnemy(Missile& enemyMissile);
 
-		int getYPos(void) const;
-		int getXPos(void) const;
-		int getYMaxPos(void) const;
-		int getXMaxPos(void) const;
-		char getName(void) const;
 		WINDOW* getWin(void) const;
 		Missile* getMissiles(void) const;
 		float getHealth(void) const;
 		float getScore(void) const;
 
-		void setYPos(int yPos);
-		void setXPos(int xPos);
-		void setYMaxPos(int yMaxPos);
-		void setXMaxPos(int xMaxPos);
-		void setName(char name);
 		void setWin(WINDOW* win);
 		void setMissiles(Missile* missiles);
 		void setHealth(float health);
@@ -45,11 +37,6 @@ class Player {
 
 
 	private:
-		int _yPos;
-		int _xPos;
-		int _yMaxPos;
-		int _xMaxPos;
-		char _name;
 		WINDOW* _win;
 		Missile* _missiles;
 		float _health;

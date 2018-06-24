@@ -3,7 +3,7 @@
 
 #include "GameEntity.hpp"
 
-class Missile {
+class Missile: public GameEntity {
 	public:
 		Missile(void);
 		Missile(const Missile& copy);
@@ -13,16 +13,7 @@ class Missile {
 		void displayPlayer(WINDOW* win);
 		void displayEnemy(WINDOW* win);
 
-		void setYPos(int yPos);
-		void setXPos(int xPos);
-
-		int getYPos(void) const;
-		int getXPos(void) const;
-
 	private:
-		int _yPos;
-		int _xPos;
-
 		void _setYXPosSmartPlayer(int yPos);
 		void _setYXPosSmartEnemy(int yPos);
 };

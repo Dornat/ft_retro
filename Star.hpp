@@ -3,7 +3,7 @@
 
 #include "GameEntity.hpp"
 
-class Star {
+class Star: public GameEntity {
 	public:
 		Star(void);
 		Star(const Star& copy);
@@ -12,16 +12,7 @@ class Star {
 
 		void display(WINDOW* win);
 
-		void setYPos(int yPos);
-		void setXPos(int xPos);
 		void setYXPosSmart(int yPos);
-
-		int getYPos(void) const;
-		int getXPos(void) const;
-
-	private:
-		int _yPos;
-		int _xPos;
 };
 
 #endif

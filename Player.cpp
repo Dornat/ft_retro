@@ -53,7 +53,6 @@ void Player::move(int key) {
 }
 
 void Player::display(void) {
-	init_pair(1, COLOR_BLUE, COLOR_BLACK);
 	wattron(this->getWin(), COLOR_PAIR(1));
 	mvwaddch(this->getWin(), this->getYPos(), this->getXPos(), this->getName());
 	wattroff(this->getWin(), COLOR_PAIR(1));
@@ -61,12 +60,6 @@ void Player::display(void) {
 
 void Player::missileLauncher(int random) {
 	for (int i = 0; i < PLAYER_MISSILES; i++) {
-		/* if (this->getMissiles()[i].getXPos() > 0 || */
-		/* 	this->getMissiles()[i].getYPos() > 0) { */
-		/* 	if (random % 15 == 0) { */
-		/* 		this->getMissiles()[i].display(this->getWin()); */
-		/* 	} */
-		/* } */
 		if (this->_missiles[i].getXPos() > 0 ||
 			this->_missiles[i].getYPos() > 0) {
 			if (random % 10 == 0) {
@@ -121,40 +114,33 @@ void Player::_moveRight(void) {
 	}
 }
 
-void Player::hitEnemy( Enemy &enemy)
-{
-	for ( int k = 0; k < PLAYER_MISSILES; k++) 
-	{
+void Player::hitEnemy(Enemy& enemy) {
+	for ( int k = 0; k < PLAYER_MISSILES; k++) {
 		if (enemy.getXPos() == this->getMissiles()[k].getXPos() &&
-			enemy.getYPos() == this->getMissiles()[k].getYPos())
-			{
-				this->setScore(this->getScore() + 1);
-				enemy.setYXPosSmart(WINDOW_HEIGHT + 42);
-			}
+				enemy.getYPos() == this->getMissiles()[k].getYPos())
+		{
+			this->setScore(this->getScore() + 1);
+			enemy.setYXPosSmart(WINDOW_HEIGHT + 42);
+		}
+	}
+}
+
+int Player::enemyCollision(Enemy& enemy) {
+	if (this->getXPos() == enemy.getXPos() &&
+			this->getYPos() == enemy.getYPos()) {
+		return 1;
+	}
+	return 0;
+}
+
+void Player::hitByEnemy(Missile& enemyMissile) {
+	if (this->getXPos() == enemyMissile.getXPos() &&
+			this->getYPos() == enemyMissile.getYPos()) {
+		this->setHealth(this->getHealth() - 1);
 	}
 }
 
 /* Getters */
-
-int Player::getYPos(void) const {
-	return this->_yPos;
-}
-
-int Player::getXPos(void) const {
-	return this->_xPos;
-}
-
-int Player::getYMaxPos(void) const {
-	return this->_yMaxPos;
-}
-
-int Player::getXMaxPos(void) const {
-	return this->_xMaxPos;
-}
-
-char Player::getName(void) const {
-	return this->_name;
-}
 
 WINDOW* Player::getWin(void) const {
 	return this->_win;
@@ -173,26 +159,6 @@ float Player::getScore(void) const {
 }
 
 /* Setters */
-
-void Player::setYPos(int yPos) {
-	this->_yPos = yPos;
-}
-
-void Player::setXPos(int xPos) {
-	this->_xPos = xPos;
-}
-
-void Player::setYMaxPos(int yMaxPos) {
-	this->_yMaxPos = yMaxPos;
-}
-
-void Player::setXMaxPos(int xMaxPos) {
-	this->_xMaxPos = xMaxPos;
-}
-
-void Player::setName(char name) {
-	this->_name = name;
-}
 
 void Player::setWin(WINDOW* win) {
 	this->_win = win;

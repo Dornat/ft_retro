@@ -25,16 +25,6 @@ void Star::display(WINDOW* win) {
 	mvwaddch(win, this->getYPos(), this->getXPos(), '.');
 }
 
-/* Getters */
-
-int Star::getYPos(void) const {
-	return this->_yPos;
-}
-
-int Star::getXPos(void) const {
-	return this->_xPos;
-}
-
 /* Setters */
 
 void Star::setYXPosSmart(int yPos) {
@@ -44,12 +34,4 @@ void Star::setYXPosSmart(int yPos) {
 	} else {
 		this->setYPos(yPos);
 	}
-}
-
-void Star::setYPos(int yPos) {
-	this->_yPos = yPos;
-}
-
-void Star::setXPos(int xPos) {
-	this->_xPos = xPos;
 }
