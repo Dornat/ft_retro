@@ -6,6 +6,7 @@ test.cpp
 Account.class.hpp
 tests.cpp
 tst.txt
+ft_retro
 
 *.o
 *.log
