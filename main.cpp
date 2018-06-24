@@ -62,7 +62,7 @@ int		main(void) {
 		}
 
 		for ( i = 0; i < NUMBER_OF_ENEMIES; i++) {
-			if (j % 30 == 0 && someEnemies[i].getName() == 'Z') {
+			if (j % 30 == 0) {
 				if (someEnemies[i].getYPos() > WINDOW_HEIGHT - 3)
 					player.setHealth(player.getHealth() - 10);
 
